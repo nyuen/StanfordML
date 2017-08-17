@@ -16,6 +16,11 @@ p = zeros(m, 1);
 %
 
 
+T=sigmoid(X*theta);
+pos=find(T>=0.5);
+for i = 1:rows(pos)
+    p(pos(i,1),1)=1;
+end
 
 
 
