@@ -23,9 +23,12 @@ p = zeros(size(X, 1), 1);
 
 
 
-
-
-
+% Add ones to the X data matrix
+X = [ones(m, 1) X];
+layer1=sigmoid(X*Theta1');
+layer1=[ones(m, 1) layer1];
+output=sigmoid(layer1*Theta2');
+[vp,p]=max(output, [], 2);
 
 
 

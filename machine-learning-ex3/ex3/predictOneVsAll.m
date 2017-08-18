@@ -30,6 +30,9 @@ X = [ones(m, 1) X];
 %       for each row.
 %       
 
+calulated_predictions=X*all_theta';
+[vp,p]=max(calulated_predictions, [], 2);
+
 
 
 
