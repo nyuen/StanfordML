@@ -63,10 +63,48 @@ Theta2_grad = zeros(size(Theta2));
 %
 
 
+% recode y to Y
+I = eye(num_labels);
+Y = zeros(m, num_labels);
+for i=1:m
+  Y(i, :)= I(y(i), :);
+end
 
+% Part 1
+a1=[ones(m, 1) X];
+z2=a1*Theta1';
+z2=sigmoid(z2);
+a2=[ones(size(z2), 1) z2];
+z3=a2*Theta2';
+H=sigmoid(z3);
+temp = ((-Y.*log(H))-(1.-Y).*log(1.-H));
 
+Theta1sum=Theta1(:, 2:end);
+Theta2sum=Theta2(:, 2:end);
+Theta2_grad=0;
+reg=sum(sum(Theta1sum.*Theta1sum)) + sum(sum(Theta2sum.*Theta2sum));
 
+J=(sum(sum(temp))/m) + lambda*reg/(2*m);
 
+%backpropagation
+X1=[ones(m, 1) X];
+for i=1:m
+a1=X1(i,:);
+z2=a1*Theta1';
+a2=sigmoid(z2);
+a2=[1 a2];
+z3=a2*Theta2';
+a3=sigmoid(z3);
+
+d3=a3.-Y(i,:);
+d2=(Theta2')*d3'.*sigmoidGradient([1 z2])';
+d2=d2(2:end);
+Theta1_grad=Theta1_grad.+(d2*a1);
+Theta2_grad=Theta2_grad.+(d3'*a2);
+end
+
+Theta1_grad=Theta1_grad./m + (lambda/m) * [zeros(rows(Theta1),1) Theta1(:, 2:end)];
+Theta2_grad=Theta2_grad./m + (lambda/m) * [zeros(rows(Theta2),1) Theta2(:, 2:end)];
 
 
 
