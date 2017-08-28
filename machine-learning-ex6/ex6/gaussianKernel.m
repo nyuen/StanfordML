@@ -16,7 +16,8 @@ sim = 0;
 %
 %
 
-
+vector=x1-x2;
+sim=exp(-(vector'*vector)/(2*(sigma.^2)));
 
 
 
