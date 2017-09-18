@@ -33,7 +33,9 @@ for i=1:K
             centroids(i,:) += X(j,:);
         end
     end
-    centroids(i,:) /= nbk;
+    if (nbk>0)
+     centroids(i,:) /= nbk;
+     end
 end
 
 
